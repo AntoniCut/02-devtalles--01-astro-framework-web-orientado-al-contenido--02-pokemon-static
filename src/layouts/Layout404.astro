@@ -1,0 +1,43 @@
+---
+
+/*
+    *  ----------------------------------------------------------  *
+    *  -----  Layout 404  --  /src/layouts/Layout404.astro  -----  *
+    *  ----------------------------------------------------------  *
+*/
+
+
+import { ClientRouter } from 'astro:transitions';
+
+import { base } from '@config/base-project';
+
+import "@styles/404.css";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+
+---
+
+
+<!doctype html>
+<html lang="es">
+    
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href={`${base}/astro-official.svg`} />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <ClientRouter />
+    </head>
+
+    <body>
+    
+        <slot />
+
+    </body>
+
+</html>

@@ -1,0 +1,18 @@
+#  *  ----------------------  *
+#  *  -----  app.http  -----  *
+#  *  ----------------------  *
+
+
+
+##  *  ----------------------------  *
+##  *  -----  get de pokemon  -----  *
+##  *  ----------------------------  *
+
+get https://pokeapi.co/api/v2/pokemon
+
+
+##  *  --------------------------------  *
+##  *  -----  get imagen pokemon  -----  *
+##  *  --------------------------------  *
+
+get https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png

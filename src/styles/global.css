@@ -1,0 +1,35 @@
+/*
+    *  ----------------------------------------------------  *
+    *  -----  global.css  --  /src/styles/global.css  -----  *
+    *  ----------------------------------------------------  *
+*/
+
+
+@import "tailwindcss";
+
+
+:root {
+    --page-transition-duration: 300ms;
+    --page-transition-easing: ease-in-out;
+}
+
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-group(root),
+::view-transition-old(*),
+::view-transition-new(*),
+::view-transition-group(*) {
+    animation-duration: var(--page-transition-duration);
+    animation-timing-function: var(--page-transition-easing);
+}
+
+
+
+@theme {
+  --breakpoint-xs: 400px; /* nuevo breakpoint */
+}

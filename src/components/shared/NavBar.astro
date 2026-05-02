@@ -1,0 +1,95 @@
+---
+
+
+/*
+    *  -------------------------------------------------------------------  *
+    *  -----  NavBar.astro  --  /src/components/shared/NavBar.astro  -----  *
+    *  -------------------------------------------------------------------  *
+*/
+
+
+import { base } from "@config/base-project";
+
+
+/** -----  `Links de Navegación` -----` */
+const links = [
+    {
+        href: `${base}`,
+        text: "Listado",
+    },
+
+    {
+        href: `${base}/pokemons/1`,
+        text: "Paginado",
+    },
+
+    {
+        href: `${base}/favorites`,
+        text: "Favoritos",
+    },
+
+    {
+        href: `${base}/islands`,
+        text: "Islas",
+    },
+
+    {
+        href: `${base}/demo`,
+        text: "Demo",
+    }
+
+];
+
+
+/** -----  `URL Actual` -----` */
+const currentPath = Astro.url.pathname;
+
+
+---
+
+
+<!--  -----  NavBar  -----  -->
+<nav class="max-w-3xl w-full flex m-auto mt-5 mb-5 px-5 py-3 bg-slate-900 justify-center items-center shadow border border-gray-300">
+
+    <div class="w-full flex justify-around items-center">
+
+        {
+            links.map(({ href, text }) => (
+                
+                <div>
+
+                    <a 
+                        href={href}
+                        class="text-gray-100  mx-1.5 sm:mx-6"
+                    >       
+                        {text}
+                    </a>
+
+                    {
+
+                        currentPath === href ? (
+                                
+                            <div 
+                                class="border-b-2 border-blue-500 mx-4" 
+                                transition:name="menu-link"
+                            />
+                        )
+
+                        : (
+                            <div 
+                                class="border-b-2 border-transparent mx-4" 
+                            />
+                        )
+                    }
+
+                </div>
+                            
+            ))
+        }
+
+
+    </div>
+          
+</nav>
+
+

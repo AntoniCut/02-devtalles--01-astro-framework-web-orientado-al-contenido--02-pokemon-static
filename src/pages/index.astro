@@ -1,11 +1,58 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+/*
+    *  -----------------------------------------------------  *
+    *  -----  index.astro  --  /src/pages/index.astro  -----  *
+    *  -----------------------------------------------------  *
+*/
+
+
+import type { PokemonListResponse } from '@interfaces/pokemon-list.response';
+import Layout from '@layouts/Layout.astro';
+import PokemonCard from '@components/pokemons/PokemonCard.astro';
+import PokemonsContainer from '@components/pokemons/PokemonsContainer.astro';
+import Title from '@components/shared/Title.astro';
+
+
+/** -----  `Fetch de la API de Pokemon` ----- */
+const rest = await fetch('https://pokeapi.co/api/v2/pokemon');
+
+/** -----  `Respuesta de la API` ----- */
+const data: PokemonListResponse = await rest.json();
+console.log('data =>\n ', data);
+
+/** -----  `Lista de Pokemon` ----- */
+const pokemonList = data.results;
+
+
 ---
 
-<Layout>
-	<Welcome />
+
+<Layout  
+    titlePage='Pokemon Static | Listado' 
+>
+  
+   <Title>
+        Listado de Pókemons
+    </Title>
+
+
+    <!-- -----  Sección para mostrar el listado de Pokemon ----- -->
+    <PokemonsContainer 
+        ariaLabel='Listado de Pokemon'
+    >
+        
+        <!--  -----  Iteración sobre la lista de Pokemon ----- -->
+        {
+            pokemonList.map(({ name, url }) => (
+                
+                <PokemonCard 
+                    name={name} 
+                    url={url} 
+                />
+            ))
+        }
+    </PokemonsContainer>
+        
+
 </Layout>

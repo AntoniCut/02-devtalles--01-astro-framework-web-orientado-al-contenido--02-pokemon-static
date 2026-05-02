@@ -1,0 +1,43 @@
+---
+
+
+/*
+    *  -------------------------------------------------------------------------------------------  *
+    *  -----  PokemonsContainer.astro  --  /src/components/pokemons/PokemonsContainer.astro  -----  *
+    *  -------------------------------------------------------------------------------------------  *
+*/
+
+
+interface Props {
+    
+    /**  -----  Etiqueta aria label para el contenedor de Pokemons */
+    ariaLabel: string;
+}
+
+const { ariaLabel } = Astro.props;
+
+---
+
+
+
+ <!-- -----  Sección para mostrar el listado de Pokemon ----- -->
+<section
+    aria-label={ariaLabel}
+    class="
+        lg:h-[605px]
+        grid
+        grid-cols-1
+        xs:grid-cols-2   <!-- >=400px -->
+        sm:grid-cols-2   <!-- >=640px -->
+        md:grid-cols-4   <!-- >=768px -->
+        lg:grid-cols-5   <!-- >=1024px -->
+        xl:grid-cols-5   <!-- >=1280px -->
+        gap-4 
+        mt-4
+        mb-4
+    "
+>
+
+    <slot />
+
+</section>

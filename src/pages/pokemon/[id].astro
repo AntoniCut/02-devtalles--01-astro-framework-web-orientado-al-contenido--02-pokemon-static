@@ -1,0 +1,106 @@
+---
+
+/*
+    *  -----------------------------------------------------------  *
+    *  -----  [id].astro  --  /src/pages/pokemon/[id].astro  -----  *
+    *  -----------------------------------------------------------  *
+*/
+
+
+import type { GetStaticPaths } from "astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
+
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import Layout from "@layouts/Layout.astro";
+
+
+/**  
+ * --------------------------------
+ * -----  `getStaticPaths()`  -----
+ * --------------------------------
+ * - Esta función se utiliza para generar rutas estáticas para cada Pokémon. 
+ * - Devuelve un array de objetos con la propiedad `params`, que contiene el nombre del Pokémon.
+ * - Astro utilizará esta información para generar una página estática para cada Pokémon en la lista.
+ */
+
+export const getStaticPaths = ( async() => {
+    
+     /** -----  `respuesta de la API pokeapi para obtener 151 Pokémon` ----- */
+    const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    
+    
+    const { results } = (await resp.json()) as PokemonListResponse
+    
+    //  -----  devolvemos un arreglo con los resultados  -----
+    return results.map( ({name, url}) => {
+
+        /** -----  `obtenemos el ID del Pokémon a partir de la URL`  ----- */
+        const id = url.split('/').at(-2) || '';
+        
+        return {
+            
+            params: { 
+                id: id
+            },
+
+            props: { 
+                name: name, 
+                url: url 
+            }
+        };
+
+    });
+
+
+}) satisfies GetStaticPaths;
+
+
+const { id } = Astro.params;
+const { name, url } = Astro.props;
+
+/** -----  `URL del audio del Pokémon` ----- */
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
+
+
+
+---
+
+
+<Layout 
+    titlePage={`Pokemon #${id} - ${name}`}
+>
+
+    <section class="mt-20 mx-10 flex flex-col justify-center items-center">
+    
+       <div class="mb-5 flex flex-col justify-center items-center">
+            <h2 class="text-5xl capitalize text-emerald-300"> {name} </h2>
+       </div>
+
+        <PokemonCard
+            name={name}
+            url={url}
+            isBig
+        />
+
+        <audio controls class="mt-10 mx-auto">
+            <source src={audioSrc} type="audio/ogg" />
+            Your browser does not support the audio element.
+        </audio>
+        
+
+    </section>
+    
+
+</Layout>
+
+
+<style>
+
+    @reference "tailwindcss";
+
+    a {
+         @apply hover:underline text-blue-500;
+    }
+
+</style>
+

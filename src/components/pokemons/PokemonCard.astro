@@ -1,0 +1,77 @@
+---
+
+/*
+    *  ------------------------------------------------------------------------------  *
+    *  -----  PokemonCard.astro  --  /src/components/pokemon/PokemonCard.astro  -----  *
+    *  ------------------------------------------------------------------------------  *
+*/
+
+
+import { base } from '@config/base-project';
+import { fade } from 'astro:transitions';
+
+
+interface Props {
+
+    /**  -----  `nombre del pokemon`  -----  */
+    name: string;  
+
+    /**  -----  `url del pokemon`  -----  */
+    url: string;
+
+    /**  -----  `indica si la tarjeta debe ser grande`  -----  */
+    isBig?: boolean;
+}
+
+const { name, url, isBig = false } = Astro.props;
+
+
+/** -----  `ID del Pokémon extraido de la URL`  -----  */
+const id = url.split('/').at(-2); 
+
+/** -----  `URL de la imagen del Pokémon`  -----  */
+const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+---
+
+
+<a 
+    href={`${base}/pokemons/${name}`} 
+    class:list={
+        [
+            "rounded flex flex-col justify-center items-center p-2 bg-slate-900",
+            {
+                "border border-blue-500": !isBig,
+                "hover:transform hover:scale-105 transition-all": !isBig,
+                
+            }
+        ]
+    }
+    transition:name={`${name}-image`}
+    transition:animate={fade({ duration: 'var(--page-transition-duration)' })}
+>
+    
+    <img 
+        src={imageSrc}
+        alt={`Pokemon ${name}`} 
+        class:list={[
+            "w-16 h-auto", 
+            {
+                "w-[300px] h-auto": isBig,
+                "hover:scale-105 transition-transform": isBig
+            }
+        ]} 
+    >
+
+    <h2 
+        class:list={[
+            "mt-2 text-center capitalize",
+            {
+                "text-4xl text-blue-300": isBig,
+            }
+        ]}
+    > 
+        #{id} <br> {name} 
+    </h2>
+
+</a>

@@ -1,0 +1,139 @@
+---
+
+
+/*
+    *  ----------------------------------------------------------------  *
+    *  -----  [name].astro  --  /src/pages/pokemons/[name].astro  -----  *
+    *  ----------------------------------------------------------------  *
+*/
+
+
+import type { GetStaticPaths } from "astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
+
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import Layout from "@layouts/Layout.astro"
+
+
+
+/**  
+ * --------------------------------
+ * -----  `getStaticPaths()`  -----
+ * --------------------------------
+ * - Esta función se utiliza para generar rutas estáticas para cada Pokémon. 
+ * - Devuelve un array de objetos con la propiedad `params`, que contiene el nombre del Pokémon.
+ * - Astro utilizará esta información para generar una página estática para cada Pokémon en la lista.
+ */
+
+ export const getStaticPaths = (async () => {
+    
+
+    /** -----  `respuesta de la API pokeapi para obtener 151 Pokémon` ----- */
+    const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+        
+    const { results } = await resp.json() as PokemonListResponse;
+
+    //  -----  devolvemos un arreglo con los resultados  -----
+    return results.map( ({name, url}) => ({
+        
+        params: { 
+            name: name 
+        },
+        
+        props: { 
+            name: name, 
+            url: url 
+        }
+
+    }));
+
+}) satisfies GetStaticPaths;
+
+
+const { name } = Astro.params;
+const { url } = Astro.props;
+
+
+/** -----  `id del Pokémon` ----- */
+const id = url.split('/').at(-2);
+
+/** -----  `URL del audio del Pokémon` ----- */
+const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+
+/** -----  `URL de la imagen del Pokémon` ----- */
+const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+
+---
+
+
+<Layout 
+    titlePage={`Pokemon #${id} - ${name}`}
+    description={`Detalles del Pokémon ${name}`}
+    image={imageSrc}
+>
+  
+
+    <!--  -----  Sección de detalles del Pokémon  -----  -->
+    <section class="mt-10 mx-10 flex flex-col justify-center items-center">
+
+        <!--  -----  Enlace para volver al listado de Pokémon  -----  -->
+        <div class="mb-5 flex flex-col justify-center items-center">
+            <h2 class="text-5xl capitalize text-emerald-300"> {name} </h2>
+       </div>
+
+    </section>
+
+    <!--  -----  Pokemon Card  -----  -->
+    <PokemonCard
+        name={name}
+        url={url}
+        isBig
+    />
+
+
+    <!--  -----  Audio  -----  -->
+    <div class="mt-10 w-full flex flex-col justify-center items-center">
+        <audio controls>
+            <source src={audioSrc} type="audio/ogg" />
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+
+</Layout>
+
+
+<style>
+
+    @reference "tailwindcss";
+
+    a {
+        @apply hover:underline text-blue-500;
+    }
+
+
+</style>
+
+
+
+<!--
+
+export const getStaticPaths = (() => {
+    
+    return [
+        { params: { name: 'bulbasaur' } },
+        { params: { name: 'ivysaur' } },
+        { params: { name: 'venusaur' } },
+        { params: { name: 'charmander' } },
+        { params: { name: 'charmeleon' } },
+        { params: { name: 'charizard' } },
+        { params: { name: 'squirtle' } },
+        { params: { name: 'wartortle' } },
+        { params: { name: 'blastoise' } },
+        { params: { name: 'caterpie' } },
+    ];
+
+}) satisfies GetStaticPaths;
+
+-->

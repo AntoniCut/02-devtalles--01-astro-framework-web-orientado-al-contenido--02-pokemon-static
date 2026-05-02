@@ -6,12 +6,17 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --open",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --open",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.2.1"
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.2.1",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
   }
 }

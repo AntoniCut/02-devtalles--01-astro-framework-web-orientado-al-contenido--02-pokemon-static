@@ -1,23 +1,80 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+/*
+    *  --------------------------------------------------------
+    *  -----  Layout.astro  -  /src/layouts/Layout.astro  -----
+    *  --------------------------------------------------------
+*/
+
+
+import { ClientRouter } from "astro:transitions";
+import { base } from "@config/base-project";
+import "@styles/global.css";
+import NavBar from "@components/shared/NavBar.astro";
+import { siteInfo } from "@consts/site-info";
+
+
+interface Props {
+
+    /**  -----  `título de la página`  -----  */
+    titlePage: string;
+    
+    /**  -----  `descripción de la página` [opcional]  -----  */
+    description?: string
+    
+    /**  -----  `imagen de la página` [opcional]  -----  */
+    image?: string;
+
+}
+
+/** -----  `obtenemos las propiedades del componente`  -----  */
+const { 
+    titlePage = siteInfo.title, 
+    description = siteInfo.description, 
+    image,
+} = Astro.props;
+
+---
+
+
+<!doctype html>
+<html lang="es">
+    
+    <head>
+        
+        <meta charset="UTF-8" />
+        
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+
+        <link rel="icon" type="image/png" href={`${base}/pokemon-static-favicon.png`} />
+        
+        <!--  -----  SEO  -----   -->
+        <meta name="description" content={description} />
+        <meta name="author" content="AntonyDev" />
+        <meta name="image" content={image} />
+
+        <!--  -----  OG Metatag  ----- -->
+        <meta property="og:title" content={titlePage} />
+        <meta property="og:description" content={description} />
+        { image && <meta property="og:image" content={image} /> }
+
+        
+        <title> {titlePage} </title>
+        <ClientRouter />
+        
+    </head>
+
+     <body class="flex flex-col min-h-svh bg-slate-800 text-slate-100">
+      
+        <NavBar />
+
+        <main class="flex flex-col flex-1 m-auto max-w-3xl px-5 w-full">
+
+            <slot />
+
+        </main>
+        
+    </body>
+
+</html>

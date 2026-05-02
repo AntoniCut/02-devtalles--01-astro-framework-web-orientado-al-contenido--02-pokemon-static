@@ -1,0 +1,135 @@
+---
+
+/*
+    *  --------------------------------------------------------------  *
+    *  -----  page.astro  --  /src/pages/pokemons/[page].astro  -----  *
+    *  --------------------------------------------------------------  *
+*/
+
+
+import type { GetStaticPaths } from "astro";
+import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
+import Layout from "@layouts/Layout.astro";
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import Title from "@components/shared/Title.astro";
+import PokemonsContainer from "@components/pokemons/PokemonsContainer.astro";
+
+
+
+
+/**  
+ * --------------------------------
+ * -----  `getStaticPaths()`  -----
+ * --------------------------------
+ * - Esta función se utiliza para generar rutas estáticas para cada Pokémon. 
+ * - Devuelve un array de objetos con la propiedad `params`, que contiene el nombre del Pokémon.
+ * - Astro utilizará esta información para generar una página estática para cada Pokémon en la lista.
+ */
+
+ export const getStaticPaths = (async ({ paginate }) => {
+    
+
+    /** -----  `respuesta de la API pokeapi para obtener 151 Pokémon` ----- */
+    const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+        
+    const { results } = await resp.json() as PokemonListResponse;
+
+    //  -----  devolvemos un arreglo con los resultados  -----
+    return paginate(results, { pageSize: 20 });
+
+
+}) satisfies GetStaticPaths;
+
+
+//** -----  `obtenemos el número de página actual de los parámetros de la URL` ----- */
+const { page } = Astro.props;
+
+/** -----  `obtenemos los Pokémon de la página actual` ----- */
+const pokemonsByPage = page.data as { name: string; url: string }[];
+
+---
+
+
+<Layout  
+    titlePage='Pokemon Static | Paginado' 
+>
+  
+    <Title>
+        Listado Paginado
+    </Title>
+
+    <!--  -----  Listado de Pokémons  -----  -->
+    <PokemonsContainer 
+        ariaLabel='Listado de Pokémons'
+    >
+
+        {
+            pokemonsByPage.map(({ name, url }) => (
+                
+                <PokemonCard  
+                    name={name} 
+                    url={url} 
+                />
+                
+            ))
+        }
+
+    </PokemonsContainer>
+
+    
+    <!--  -----  Paginación  -----  -->
+    <section 
+        class="w-full flex flex-wrap gap-2 justify-center items-center mt-1 mb-5 bg-slate-900 p-4 border border-gray-300"
+        aria-label="Paginación de Pokémons"
+    >
+        
+        <a 
+            class:list={[
+                "btn",
+                {
+                    disabled: !page.url.prev,
+                }
+            ]} 
+            href={page.url.prev} 
+        > 
+            Anteriores 
+        </a>
+
+
+        <a 
+            class:list={[
+                "btn",
+                {
+                    disabled: !page.url.next,
+                }
+            ]} 
+            href={page.url.next} 
+        > 
+            Siguientes 
+        </a>
+
+        
+        <div class="hidden xs:flex flex-1"> </div>
+
+        <h3 class="text-xl font-bold"> Página {page.currentPage} </h3>
+
+    </section>
+        
+
+</Layout>
+
+
+
+<style>
+
+    @reference "tailwindcss";
+
+    .btn {
+        @apply bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600;
+    }
+
+    .disabled {
+        @apply bg-gray-600 text-gray-400 cursor-not-allowed;
+    }
+
+</style>
