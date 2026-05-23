@@ -1,114 +1,89 @@
 ---
-
 /*
-    *  ----------------------------------------------------------------------  *
-    *  -----  NotFound404.astro  --  /src/components/NotFound404.astro  -----  *
-    *  ----------------------------------------------------------------------  *
-*/
+ *  ----------------------------------------------------------------------  *
+ *  -----  NotFound404.astro  --  /src/components/NotFound404.astro  -----  *
+ *  ----------------------------------------------------------------------  *
+ */
 
-
-import { base } from '@config/base-project';
-
+import { base } from "@config/base-project";
 
 ---
 
 
 <main class="bg-purple">
-        
-        <div class="stars">
-            
-            <div class="custom-navbar">
-                
-                <div class="brand-logo">
-                    
-                    <img
-                        src="http://salehriaz.com/404Page/img/logo.svg"
-                        width="80px"
-                    />
-                </div>
-                
-                <div class="navbar-links">
-                    
-                    <ul>
-                        
-                        <li>
-                            <a href=`${base}`> Home Page </a>
-                        </li>
-                        
-                        <li>
-                            <a href=`${base}/about`> About Page </a>
-                        </li>
-                                                                     
-                        <li>
-                            <a href=`${base}/contact`> Contact Page </a>
-                        </li>
-                        
-                        <li>
-                            <a href=`${base}/welcome-to-astro`> Welcome to Astro </a>
-                        </li>
+  <div class="stars">
+    <div class="custom-navbar">
+      <div class="brand-logo">
+        <img src="http://salehriaz.com/404Page/img/logo.svg" width="80px" />
+      </div>
 
-                    </ul>
+      <div class="navbar-links">
+        <ul>
+          <li>
+            <a href=`${base}`> Home Page </a>
+          </li>
 
-                </div>
+          <li>
+            <a href=`${base}/about`> About Page </a>
+          </li>
 
-            </div>
+          <li>
+            <a href=`${base}/contact`> Contact Page </a>
+          </li>
 
-            <div class="central-body">
-                
-                <img
-                    class="image-404"
-                    src="http://salehriaz.com/404Page/img/404.svg"
-                    width="300px"
-                />
+          <li>
+            <a href=`${base}/welcome-to-astro`> Welcome to Astro </a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-                <a href=`${base}` class="btn-go-home"> GO BACK HOME </a>
+    <div class="central-body">
+      <img
+        class="image-404"
+        src="http://salehriaz.com/404Page/img/404.svg"
+        width="300px"
+      />
 
-            </div>
+      <a href=`${base}` class="btn-go-home"> GO BACK HOME </a>
+    </div>
 
-            <div class="objects">
-                
-                <img
-                    class="object_rocket"
-                    src="http://salehriaz.com/404Page/img/rocket.svg"
-                    width="40px"
-                />
-                
-                <div class="earth-moon">
-                    
-                    <img
-                        class="object_earth"
-                        src="http://salehriaz.com/404Page/img/earth.svg"
-                        width="100px"
-                    />
-                    
-                    <img
-                        class="object_moon"
-                        src="http://salehriaz.com/404Page/img/moon.svg"
-                        width="80px"
-                    />
+    <div class="objects">
+      <img
+        class="object_rocket"
+        src="http://salehriaz.com/404Page/img/rocket.svg"
+        width="40px"
+      />
 
-                </div>
+      <div class="earth-moon">
+        <img
+          class="object_earth"
+          src="http://salehriaz.com/404Page/img/earth.svg"
+          width="100px"
+        />
 
-                <div class="box_astronaut">
-                    
-                    <img
-                        class="object_astronaut"
-                        src="http://salehriaz.com/404Page/img/astronaut.svg"
-                        width="140px"
-                    />
+        <img
+          class="object_moon"
+          src="http://salehriaz.com/404Page/img/moon.svg"
+          width="80px"
+        />
+      </div>
 
-                </div>
+      <div class="box_astronaut">
+        <img
+          class="object_astronaut"
+          src="http://salehriaz.com/404Page/img/astronaut.svg"
+          width="140px"
+        />
+      </div>
+    </div>
 
-            </div>
-
-            <div class="glowing_stars">
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-            </div>
-            
-        </div>
-
-    </main>
+    <div class="glowing_stars">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
+  </div>
+</main>

@@ -65,11 +65,11 @@ const {
         
     </head>
 
-     <body class="flex flex-col min-h-svh bg-slate-800 text-slate-100">
+     <body class="layout">
       
         <NavBar />
 
-        <main class="flex flex-col flex-1 m-auto max-w-3xl px-5 w-full">
+        <main class="layout__main">
 
             <slot />
 
@@ -78,3 +78,19 @@ const {
     </body>
 
 </html>
+
+
+<style>
+
+    @reference "tailwindcss";
+
+    .layout {
+        @apply flex flex-col min-h-svh bg-slate-800 text-slate-100;
+    }
+
+    .layout__main {
+        @apply flex flex-col flex-1 m-auto max-w-3xl px-5 w-full;
+    }
+
+
+</style>

@@ -10,7 +10,9 @@
 import type { GetStaticPaths } from "astro";
 import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
 
+import PokemonAudio from "@components/pokemons/PokemonAudio.astro";
 import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import PokemonHeader from "@components/pokemons/PokemonHeader.astro";
 import Layout from "@layouts/Layout.astro";
 
 
@@ -58,6 +60,8 @@ export const getStaticPaths = ( async() => {
 const { id } = Astro.params;
 const { name, url } = Astro.props;
 
+
+
 /** -----  `URL del audio del Pokémon` ----- */
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
 
@@ -70,25 +74,21 @@ const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
     titlePage={`Pokemon #${id} - ${name}`}
 >
 
-    <section class="mt-20 mx-10 flex flex-col justify-center items-center">
-    
-       <div class="mb-5 flex flex-col justify-center items-center">
-            <h2 class="text-5xl capitalize text-emerald-300"> {name} </h2>
-       </div>
+    <PokemonHeader
+        name={name}
+        id={id}
+    />
 
-        <PokemonCard
-            name={name}
-            url={url}
-            isBig
-        />
+    <PokemonCard
+        name={name}
+        url={url}
+        isBig
+    />
 
-        <audio controls class="mt-10 mx-auto">
-            <source src={audioSrc} type="audio/ogg" />
-            Your browser does not support the audio element.
-        </audio>
-        
-
-    </section>
+    <PokemonAudio
+        src={audioSrc}
+        name={name}
+    />
     
 
 </Layout>

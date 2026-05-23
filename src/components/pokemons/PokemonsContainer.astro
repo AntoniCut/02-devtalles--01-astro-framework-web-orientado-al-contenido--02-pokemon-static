@@ -23,21 +23,33 @@ const { ariaLabel } = Astro.props;
  <!-- -----  Sección para mostrar el listado de Pokemon ----- -->
 <section
     aria-label={ariaLabel}
-    class="
-        lg:h-[605px]
-        grid
-        grid-cols-1
-        xs:grid-cols-2   <!-- >=400px -->
-        sm:grid-cols-2   <!-- >=640px -->
-        md:grid-cols-4   <!-- >=768px -->
-        lg:grid-cols-5   <!-- >=1024px -->
-        xl:grid-cols-5   <!-- >=1280px -->
-        gap-4 
-        mt-4
-        mb-4
-    "
+    class="main__pokemon-container"
 >
 
     <slot />
 
 </section>
+
+
+<style>
+
+    @reference "../../styles/global.css";
+
+    .main__pokemon-container {
+        @apply 
+        lg:h-[605px] 
+        grid 
+        grid-cols-1 
+        xs:grid-cols-2 
+        sm:grid-cols-2 
+        md:grid-cols-4 
+        lg:grid-cols-5 
+        xl:grid-cols-5 
+        gap-4 
+        mt-4 
+        mb-4;
+    }
+
+</style>
+
+

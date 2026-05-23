@@ -1,0 +1,33 @@
+---
+
+/*
+    *  --------------------------------------------------------------------------------  *
+    *  -----  PokemonAudio.astro  --  /src/components/pokemons/PokemonAudio.astro  -----  *
+    *  --------------------------------------------------------------------------------  *
+*/
+
+
+interface Props {
+
+    /**  -----  URL del audio del Pokémon  -----  */
+    src: string;
+
+    /**  -----  Nombre del Pokémon para accesibilidad  -----  */
+    name: string;
+}
+
+const { src, name } = Astro.props;
+
+---
+
+
+<div class="mt-10 w-full flex flex-col justify-center items-center">
+    <audio
+        controls
+        preload="none"
+        aria-label={`Audio del Pokémon ${name}`}
+    >
+        <source src={src} type="audio/ogg" />
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+</div>

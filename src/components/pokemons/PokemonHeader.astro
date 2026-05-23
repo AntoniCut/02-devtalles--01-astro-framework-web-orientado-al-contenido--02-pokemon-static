@@ -1,0 +1,157 @@
+---
+
+/*
+    *  ----------------------------------------------------------------------------------  *
+    *  -----  PokemonHeader.astro  --  /src/components/pokemons/PokemonHeader.astro  -----  *
+    *  ----------------------------------------------------------------------------------  *
+*/
+
+
+import { Icon } from "astro-icon/components";
+
+interface Props {
+
+    /**  -----  Nombre del Pokémon  -----  */
+    name: string;
+
+    /**  -----  ID del Pokémon  -----  */
+    id: string;
+}
+
+const { name, id } = Astro.props;
+
+
+---
+
+
+<!--  -----  Sección de detalles del Pokémon  -----  -->
+<section class="mt-10 mx-10 flex flex-col justify-center items-center">
+
+    <!--  -----  Encabezado del Pokémon  -----  -->
+    <header class="mb-5 flex flex-col justify-center items-center cursor-pointer">
+
+        <!--  -----  Enlace para volver al listado de Pokémon  -----  -->
+        <button
+            onclick="history.back()"
+            class="text-blue-500 mb-2.5"
+        >
+            Regresar
+        </button>
+
+        <!--  -----  Container del nombre del Pokémon y Icon de Favoritos  ----- -->
+        <div class="flex items-center space-x-2">
+
+            <!--  -----  Nombre del Pokémon  -----  -->
+            <h2 class="text-5xl capitalize text-emerald-300">
+                {name}
+            </h2>
+
+            <!--  -----  Icon de Favoritos  -----  -->
+            <button 
+                id="btnFavourite"
+                class="ml-4"
+                data-name={name}
+                data-id={id}
+            >
+
+                <Icon 
+                    data-outline name="heart-outline" 
+                    size={50} 
+                />
+
+                <Icon 
+                    data-full name="heart-full" 
+                    size={50} 
+                    class="hidden"
+                />
+
+            </button>
+            
+           
+
+        </div>
+
+    </header>
+
+</section>
+
+
+<style>
+
+    @reference "tailwindcss";
+
+    #btnFavourite {
+        @apply 
+        hover:animate-pulse;
+        cursor: pointer
+    }
+
+</style>
+
+
+
+<script>
+
+    import type { FavoritePokemon } from '@interfaces/favorite-pokemon';
+
+
+    /**
+     * --------------------------------
+     * -----  `handlePageLoad()`  -----
+     * --------------------------------
+     * - Función que se ejecuta cuando la página ha cargado. Aquí puedes agregar cualquier lógica 
+     *   que necesites ejecutar al cargar la página, como configurar eventos, cargar datos adicionales, etc.
+     * - En este ejemplo, se agrega un evento de clic al botón de favoritos para capturar el Pokémon seleccionado como favorito.
+     */
+
+    const handlePageLoad = () => {
+        
+
+        //  -----  Mensaje de consola para indicar que la página ha cargado  -----
+        console.log('\n\n')
+        console.log(
+            `%c Página cargada. Puedes agregar aquí cualquier lógica que necesites ejecutar al cargar la página.`,
+            `color: green; font-size: 10px; padding: 4px; border: 1px solid green; border-radius: 4px; background-color: #f0f0f0;`
+        );
+
+        /**  -----  `Botón de favoritos`  ----- */
+        const btnFavorite = document.getElementById('btnFavourite') as HTMLButtonElement | null;
+
+        //  -----  Verificación de que el botón de favoritos existe en el DOM  -----
+        if (!btnFavorite) {
+            console.log('\n\n');
+            console.error("No se encontró el botón de favoritos. Asegúrate de que el elemento con id 'btnFavourite' exista en el DOM.");
+            return;
+        }
+
+        //  -----  Obtención de los datos del Pokémon desde el botón de favoritos  -----
+        const name = btnFavorite?.dataset.name ?? "";
+        const id = Number(btnFavorite?.dataset.id) ?? 0;
+
+        console.log(`Pokemon: ${name}, ID: ${id}`);
+
+
+        //  -----  Evento de clic para el botón de favoritos  -----
+        btnFavorite?.addEventListener('click', () => {
+
+            const favoritePokemon: FavoritePokemon = {
+                name,
+                id
+            };
+
+            console.log("Pokémon favorito seleccionado:", favoritePokemon);
+
+            // Aquí puedes agregar la lógica para guardar el Pokémon favorito, por ejemplo, en localStorage o enviarlo a un servidor.
+
+        });
+
+    };
+   
+
+
+    //  -----  Evento que se dispara cuando la página ha cargado  -----
+    document.addEventListener('astro:page-load', handlePageLoad);
+
+
+
+</script>

@@ -13,8 +13,9 @@ import { base } from "@config/base-project";
 
 /** -----  `Links de Navegación` -----` */
 const links = [
+    
     {
-        href: `${base}`,
+        href: `${base}/`,
         text: "Listado",
     },
 
@@ -44,52 +45,271 @@ const links = [
 /** -----  `URL Actual` -----` */
 const currentPath = Astro.url.pathname;
 
+console.log("currentPath - URL Actual =>", currentPath);
+
 
 ---
 
 
 <!--  -----  NavBar  -----  -->
-<nav class="max-w-3xl w-full flex m-auto mt-5 mb-5 px-5 py-3 bg-slate-900 justify-center items-center shadow border border-gray-300">
+<nav 
+    class="layout__navbar" 
+    aria-label="Barra de navegación principal"
+>
 
-    <div class="w-full flex justify-around items-center">
+    <div class="navbar__mobile-bar">
+
+        <button
+            id="navbar-toggle"
+            type="button"
+            class="navbar__toggle"
+            aria-expanded="false"
+            aria-controls="navbar-mobile-menu"
+            aria-label="Abrir o cerrar menú de navegación"
+        >
+
+            <span class="navbar__toggle-icon" aria-hidden="true">
+                <span class="navbar__toggle-icon-line"></span>
+                <span class="navbar__toggle-icon-line"></span>
+                <span class="navbar__toggle-icon-line"></span>
+            </span>
+
+            <span>Menú</span>
+
+        </button>
+
+    </div>
+    
+    <ul class="navbar__list navbar__list--desktop"> 
 
         {
             links.map(({ href, text }) => (
                 
-                <div>
+                <li class="navbar__item">
 
                     <a 
                         href={href}
-                        class="text-gray-100  mx-1.5 sm:mx-6"
+                        class="navbar__link"
                     >       
                         {text}
                     </a>
 
                     {
 
-                        currentPath === href ? (
-                                
-                            <div 
-                                class="border-b-2 border-blue-500 mx-4" 
-                                transition:name="menu-link"
-                            />
-                        )
+                        currentPath === href 
+                        
+                            ? (
+                                    
+                                  <div 
+                                      class="active" 
+                                      transition:name="menu-link"
+                                  />
+                            )
 
-                        : (
-                            <div 
-                                class="border-b-2 border-transparent mx-4" 
-                            />
-                        )
+                            : (
+                                  <div 
+                                      class="inactive" 
+                                  />
+                            )
                     }
 
-                </div>
+                </li>
                             
             ))
         }
 
 
-    </div>
+    </ul>
+
+    <ul id="navbar-mobile-menu" class="navbar__list--mobile" aria-hidden="true" inert>
+
+        {
+            links.map(({ href, text }) => (
+
+                <li class="navbar__mobile-item">
+                    <a
+                        href={href}
+                        class={`navbar__mobile-link ${currentPath === href ? "navbar__mobile-link--active" : ""}`}
+                    >
+                        {text}
+                    </a>
+                </li>
+
+            ))
+        }
+
+    </ul>
           
 </nav>
 
 
+
+<script>
+
+    let navbarAbortController: AbortController | undefined;
+
+    const initNavbarMenu = () => {
+
+        if (navbarAbortController) {
+            navbarAbortController.abort();
+        }
+
+        navbarAbortController = new AbortController();
+        const { signal } = navbarAbortController;
+
+        const toggleButton = document.getElementById("navbar-toggle");
+        const mobileMenu = document.getElementById("navbar-mobile-menu");
+
+        if (!toggleButton || !mobileMenu) {
+            return;
+        }
+
+        const closeMenu = () => {
+            const activeElement = document.activeElement;
+            const hasFocusInsideMenu = activeElement instanceof HTMLElement && mobileMenu.contains(activeElement);
+
+            if (hasFocusInsideMenu) {
+                toggleButton.focus();
+            }
+
+            mobileMenu.classList.remove("is-open");
+            mobileMenu.setAttribute("inert", "");
+            mobileMenu.setAttribute("aria-hidden", "true");
+            toggleButton.setAttribute("aria-expanded", "false");
+        };
+
+        const openMenu = () => {
+            mobileMenu.classList.add("is-open");
+            mobileMenu.removeAttribute("inert");
+            mobileMenu.setAttribute("aria-hidden", "false");
+            toggleButton.setAttribute("aria-expanded", "true");
+        };
+
+        const syncByViewport = () => {
+            if (window.innerWidth >= 768) {
+                closeMenu();
+            }
+        };
+
+        toggleButton.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.contains("is-open");
+            if (isOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }, { signal });
+
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                closeMenu();
+            }, { signal });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        }, { signal });
+
+        window.addEventListener("resize", syncByViewport, { signal });
+        closeMenu();
+        syncByViewport();
+    };
+
+    document.addEventListener("astro:page-load", initNavbarMenu);
+    initNavbarMenu();
+
+</script>
+
+
+<style>
+    
+    @reference "tailwindcss";
+
+    .layout__navbar {
+        @apply 
+        relative
+        max-w-3xl 
+        w-full 
+        flex 
+        flex-col
+        md:flex-row
+        justify-center items-center
+        m-auto mt-5 mb-5 px-5 py-3 
+        bg-slate-900  
+        shadow border border-gray-300
+        overflow-visible
+        md:overflow-x-auto;
+    }
+
+    .navbar__mobile-bar {
+        @apply flex md:hidden w-full justify-end;
+    }
+
+    .navbar__toggle {
+        @apply inline-flex items-center gap-2 rounded border border-slate-500 px-3 py-2 text-sm text-slate-100;
+    }
+
+    .navbar__toggle-icon {
+        @apply inline-flex flex-col gap-1;
+    }
+
+    .navbar__toggle-icon-line {
+        @apply block h-0.5 w-4 bg-slate-100;
+    }
+
+    .navbar__list {
+        @apply 
+        flex 
+        flex-nowrap
+        justify-around items-center 
+        w-full;
+    }
+
+    .navbar__list--desktop {
+        @apply hidden md:flex;
+    }
+
+    .navbar__list--mobile {
+        @apply 
+        flex md:hidden flex-col gap-2
+        absolute left-0 right-0 top-full z-50 mt-2
+        rounded border border-gray-300 bg-slate-900 p-3 shadow-lg
+        opacity-0 -translate-y-2 pointer-events-none
+        transition duration-200 ease-out;
+    }
+
+    .navbar__mobile-item {
+        @apply w-full;
+    }
+
+    .navbar__mobile-link {
+        @apply block w-full rounded px-3 py-2 text-gray-100 border border-transparent;
+    }
+
+    .navbar__mobile-link--active {
+        @apply border-blue-500 bg-slate-800;
+    }
+
+    .navbar__item {
+        @apply shrink-0;
+    }
+
+    .navbar__link {
+        @apply text-gray-100 px-2 sm:px-4;
+    }
+   
+    .active {
+        @apply border-b-2 border-blue-500 mx-4;
+    }
+
+    .inactive {
+        @apply border-b-2 border-transparent mx-4;
+    }
+
+    .is-open {
+        @apply opacity-100 translate-y-0 pointer-events-auto;
+    }
+
+</style>

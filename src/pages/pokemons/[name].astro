@@ -12,6 +12,8 @@ import type { GetStaticPaths } from "astro";
 import type { PokemonListResponse } from "@interfaces/pokemon-list.response";
 
 import PokemonCard from "@components/pokemons/PokemonCard.astro";
+import PokemonAudio from "@components/pokemons/PokemonAudio.astro";
+import PokemonHeader from "@components/pokemons/PokemonHeader.astro";
 import Layout from "@layouts/Layout.astro"
 
 
@@ -55,7 +57,7 @@ const { url } = Astro.props;
 
 
 /** -----  `id del Pokémon` ----- */
-const id = url.split('/').at(-2);
+const id = url.split('/').at(-2) ?? "";
 
 /** -----  `URL del audio del Pokémon` ----- */
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
@@ -75,14 +77,10 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
   
 
     <!--  -----  Sección de detalles del Pokémon  -----  -->
-    <section class="mt-10 mx-10 flex flex-col justify-center items-center">
-
-        <!--  -----  Enlace para volver al listado de Pokémon  -----  -->
-        <div class="mb-5 flex flex-col justify-center items-center">
-            <h2 class="text-5xl capitalize text-emerald-300"> {name} </h2>
-       </div>
-
-    </section>
+    <PokemonHeader 
+        name={name} 
+        id={id}
+    />
 
     <!--  -----  Pokemon Card  -----  -->
     <PokemonCard
@@ -91,14 +89,11 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
         isBig
     />
 
-
     <!--  -----  Audio  -----  -->
-    <div class="mt-10 w-full flex flex-col justify-center items-center">
-        <audio controls>
-            <source src={audioSrc} type="audio/ogg" />
-            Your browser does not support the audio element.
-        </audio>
-    </div>
+    <PokemonAudio
+        src={audioSrc}
+        name={name}
+    />
 
 
 </Layout>

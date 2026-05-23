@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 
 
 import tailwindcss from '@tailwindcss/vite';
+import icon from 'astro-icon';
 
 
 /**  -----  `ruta absoluta del directorio actual`  -----  */
@@ -21,6 +22,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
 
     base: '/01-astro-framework-web-orientado-al-contenido/02-pokemon-static',
+  
 
     // devToolbar: {
     //     enabled: true,
@@ -48,5 +50,9 @@ export default defineConfig({
 
         plugins: [tailwindcss()],
     },
+
+     integrations: [
+        icon(),
+    ],
 
 });
