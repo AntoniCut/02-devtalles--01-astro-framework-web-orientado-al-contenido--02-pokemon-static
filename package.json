@@ -11,6 +11,12 @@
     "preview": "astro preview --open",
     "astro": "astro"
   },
+  "author": "AntonyDev",
+  "license": "ISC",
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/AntoniCut/02-devtalles--01-astro-framework-web-orientado-al-contenido--02-pokemon-static"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/solid-js": "^6.0.1",

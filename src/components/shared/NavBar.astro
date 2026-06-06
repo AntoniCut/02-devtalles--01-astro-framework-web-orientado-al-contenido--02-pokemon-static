@@ -15,7 +15,7 @@ import { base } from "@config/base-project";
 const links = [
     
     {
-        href: `${base}/`,
+        href: `${base}`,
         text: "Listado",
     },
 
@@ -42,8 +42,8 @@ const links = [
 ];
 
 
-/** -----  `URL Actual` -----` */
-const currentPath = Astro.url.pathname;
+/** -----  `URL Actual` (normalizada: sin trailing slash) -----` */
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || `${base}`;
 
 console.log("currentPath - URL Actual =>", currentPath);
 
@@ -75,7 +75,7 @@ console.log("currentPath - URL Actual =>", currentPath);
                 <span class="navbar__toggle-icon-line"></span>
             </span>
 
-            <span>Menú</span>
+            <span> Menú </span>
 
         </button>
 
@@ -157,7 +157,17 @@ console.log("currentPath - URL Actual =>", currentPath);
 <!--  -----  Script para manejar el menú de navegación móvil  -----  -->
 <script>
 
+    /** -----  Controlador de abortos para eventos del menú de navegación móvil  ----- */
     let navbarAbortController: AbortController | undefined;
+
+
+    /**
+     * -------------------------------------
+     * -----  `initNavbarMenu()`  -----
+     * -------------------------------------
+     * - Inicializa el comportamiento del menú de navegación móvil, incluyendo la apertura/cierre del menú, 
+     *   la sincronización con el tamaño de la ventana y el manejo de eventos de teclado.
+     */
 
     const initNavbarMenu = () => {
 
@@ -168,12 +178,22 @@ console.log("currentPath - URL Actual =>", currentPath);
         navbarAbortController = new AbortController();
         const { signal } = navbarAbortController;
 
-        const toggleButton = document.getElementById("navbar-toggle");
-        const mobileMenu = document.getElementById("navbar-mobile-menu");
+        /** -----  `Elemento del botón de alternancia del menú de navegación móvil`  ----- */
+        const toggleButton = document.getElementById("navbar-toggle") as HTMLButtonElement | null;
+        
+        /** -----  `Elemento del menú de navegación móvil`  ----- */
+        const mobileMenu = document.getElementById("navbar-mobile-menu") as HTMLUListElement | null;
 
         if (!toggleButton || !mobileMenu) {
             return;
         }
+
+        /**
+         * ---------------------------
+         * -----  `closeMenu()`  -----
+         * ---------------------------
+         * - Cierra el menú de navegación móvil, asegurándose de que el foco se gestione
+         */
 
         const closeMenu = () => {
             const activeElement = document.activeElement;
@@ -189,6 +209,13 @@ console.log("currentPath - URL Actual =>", currentPath);
             toggleButton.setAttribute("aria-expanded", "false");
         };
 
+        /**
+         * --------------------------
+         * -----  `openMenu()`  -----
+         * --------------------------
+         * - Abre el menú de navegación móvil, asegurándose de que el foco se gestione
+         */
+
         const openMenu = () => {
             mobileMenu.classList.add("is-open");
             mobileMenu.removeAttribute("inert");
@@ -196,6 +223,15 @@ console.log("currentPath - URL Actual =>", currentPath);
             toggleButton.setAttribute("aria-expanded", "true");
         };
 
+
+        /**
+         * -------------------------------------
+         * -----  `syncByViewport()`  -----
+         * -------------------------------------
+         * - Sincroniza el estado del menú de navegación móvil con el tamaño de la ventana, 
+         *   cerrando el menú si se amplía a un tamaño de escritorio.
+         */
+        
         const syncByViewport = () => {
             if (window.innerWidth >= 768) {
                 closeMenu();
