@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
+import solidJs from '@astrojs/solid-js';
 
 
 /**  -----  `ruta absoluta del directorio actual`  -----  */
@@ -48,11 +49,14 @@ export default defineConfig({
             },
         },
 
-        plugins: [tailwindcss()],
+        plugins: [
+            tailwindcss()
+        ],
     },
 
      integrations: [
-        icon(),
+        icon(), 
+        solidJs()
     ],
 
 });

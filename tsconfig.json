@@ -1,44 +1,49 @@
 {
-    "extends": "astro/tsconfigs/strict",
-    "include": [
-        ".astro/types.d.ts",
-        "**/*"
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@consts/*": [
+        "src/consts/*"
+      ],
+      "@interfaces/*": [
+        "src/interfaces/*"
+      ],
+      "@scripts/*": [
+        "src/scripts/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ]
+    },
+    "ignoreDeprecations": "6.0",
+    "types": [
+      "astro/client",
+      "node"
     ],
-    "exclude": [
-        "dist"
-    ],
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@components/*": [
-                "src/components/*"
-            ],
-            "@layouts/*": [
-                "src/layouts/*"
-            ],
-            "@config/*": [
-                "src/config/*"
-            ],
-            "@consts/*": [
-                "src/consts/*"
-            ],
-            "@interfaces/*": [
-                "src/interfaces/*"
-            ],
-            "@scripts/*": [
-                "src/scripts/*"
-            ],
-            "@styles/*": [
-                "src/styles/*"
-            ],
-            "@assets/*": [
-                "src/assets/*"
-            ],
-            "@src/*": [
-                "src/*"
-            ]
-        },
-        "ignoreDeprecations": "6.0",
-        "types": ["astro/client", "node"]
-    }
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
+  }
 }

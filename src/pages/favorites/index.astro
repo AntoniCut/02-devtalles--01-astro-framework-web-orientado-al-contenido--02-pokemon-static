@@ -10,6 +10,7 @@
 
 import Layout from "@layouts/Layout.astro"
 import Title from "@components/shared/Title.astro"
+import { Counter } from "@components/shared/Counter"
 
 
 ---
@@ -26,5 +27,8 @@ import Title from "@components/shared/Title.astro"
     <p class="text-center text-gray-600 mt-4">
         Aquí se mostrarán tus Pokémon favoritos.
     </p>
+
+    <!-- <Counter client:load /> -->
+    <Counter client:only="solid" />
 
 </Layout>

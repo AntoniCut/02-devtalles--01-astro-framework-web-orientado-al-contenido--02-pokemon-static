@@ -10,8 +10,12 @@
 
 import Layout from "@layouts/Layout.astro"
 import Title from "@components/shared/Title.astro"
+import { Counter } from "@components/shared/Counter"
+import Video from "@components/shared/Video.astro";
 
 
+/** -----  Valor inicial del contador ----- */
+const counterValue: number = 20;
 
 ---
 
@@ -24,8 +28,32 @@ import Title from "@components/shared/Title.astro"
         Islas con Solid JS
     </Title>
 
-    <p class="text-center text-gray-600 mt-4">
-        Islas con Solid JS.
-    </p>
+
+    <h2 class="mt-12 mb-4  text-4xl text-center"> 
+        Scroll hacia abajo para ver 
+        <br> 
+        la Isla Counter en SolidJS 
+    </h2>
+
+
+    <Video />
+
+    
+    <div class="w-full flex flex-col justify-center items-center gap-4 p-5 mt-500">
+
+        <Counter 
+            client:visible 
+            initialValue={counterValue}
+            transition:persist="counter-value"
+            transition:persist-props
+        >
+
+            <Title>
+                Contador Islas - SolidJS
+            </Title>
+
+        </Counter>
+
+    </div>
 
 </Layout>
