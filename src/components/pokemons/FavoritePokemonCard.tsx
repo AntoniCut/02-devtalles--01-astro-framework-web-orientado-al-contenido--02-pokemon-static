@@ -62,29 +62,27 @@ export const FavoritePokemonCard: Component<Props> = ({ pokemon }) => {
 
         <Show when={isVisible()}>
 
-            {/* <div class="rounded flex flex-col justify-center items-center p-2 w-45 bg-slate-900"> */}
-
-            <div class="border border-blue-500 rounded flex flex-col justify-center items-center p-2 w-45 bg-slate-900">
+            <div class="rounded flex flex-col justify-center items-center p-2 bg-slate-900 border border-blue-500 hover:transform hover:scale-105 transition-all">
                 
-                <a href={`/pokemons/${pokemon.name}`} >
+                <a href={`/pokemons/${pokemon.name}`} class="flex flex-col justify-center items-center">
 
                     <img
                         src={imageSrc}
                         alt={pokemon.name}
                         width="96"
                         height="96"
-                        class="w-16 h-auto mb-2"
+                        class="w-16 h-auto"
                         style={`view-transition-name: ${pokemon.name}-image`}
                     />
 
-                    <p class="text-center text-lg mb-2">
-                        #{pokemon.id} - {pokemon.name}
-                    </p>
+                    <h2 class="mt-2 text-center capitalize">
+                        #{pokemon.id} <br /> {pokemon.name}
+                    </h2>
 
                 </a>
 
                 <button
-                    class="btn text-red-400 hover:text-red-600"
+                    class="btn mt-2 text-red-400 hover:text-red-600"
                     onClick={deleteFavorite}
                 >
                     Eliminar

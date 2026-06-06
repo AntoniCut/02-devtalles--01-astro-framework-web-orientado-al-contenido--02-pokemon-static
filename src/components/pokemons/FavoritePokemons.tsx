@@ -9,7 +9,6 @@
 import { createSignal, For } from 'solid-js';
 import type { FavoritePokemon } from '@interfaces/favorite-pokemon';
 import { FavoritePokemonCard } from '@components/pokemons/FavoritePokemonCard'
-import type { ZodNullable } from 'astro:schema';
 
 
 
@@ -49,18 +48,9 @@ export const FavoritePokemons = () => {
 
     return (
 
-        // <div class="flex flex-wrap justify-center gap-4 mt-4 mb-12">
-        <div class="
-            grid 
-            grid-cols-1 
-            xs:grid-cols-2 
-            sm:grid-cols-2 
-            md:grid-cols-4 
-            lg:grid-cols-5 
-            xl:grid-cols-5 
-            gap-4 
-            mt-4 
-            mb-4"
+        <section
+            class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-4 mb-4 lg:h-151.25"
+            aria-label="Listado de Pokémon favoritos"
         >
             
             <For each={ pokemons() }>
@@ -74,7 +64,7 @@ export const FavoritePokemons = () => {
 
             </For>
 
-        </div>
+        </section>
 
 
     )
