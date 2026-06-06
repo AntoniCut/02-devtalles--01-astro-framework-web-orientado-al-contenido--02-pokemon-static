@@ -26,7 +26,7 @@ export const setupFavoritesButton = (): void => {
 
     /**  -----  Array de Pokémon favoritos  ----- */
     let favoritePokemons: FavoritePokemon[] = JSON.parse(
-        localStorage.getItem('favoritesPokemons') ?? '[]'
+        localStorage.getItem('favorites-pokemons') ?? '[]'
     );
 
     
@@ -105,7 +105,7 @@ export const setupFavoritesButton = (): void => {
             : favoritePokemons.push({ name, id });
         
         //  -----  Guardar la lista actualizada de Pokémon favoritos en localStorage  -----
-        localStorage.setItem('favoritesPokemons', JSON.stringify(favoritePokemons));
+        localStorage.setItem('favorites-pokemons', JSON.stringify(favoritePokemons));
 
         //  -----  Sincronizar el ícono de corazón con el estado actual  -----
         updateHeartIcon();

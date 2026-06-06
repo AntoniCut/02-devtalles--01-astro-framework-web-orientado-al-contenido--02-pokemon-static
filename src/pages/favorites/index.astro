@@ -10,7 +10,7 @@
 
 import Layout from "@layouts/Layout.astro"
 import Title from "@components/shared/Title.astro"
-import { Counter } from "@components/shared/Counter"
+import { FavoritePokemons } from "@components/pokemons/FavoritePokemons"
 
 
 ---
@@ -24,11 +24,10 @@ import { Counter } from "@components/shared/Counter"
         Favoritos
     </Title>
 
-    <p class="text-center text-gray-600 mt-4">
+    <p class="text-center text-gray-300 mt-4">
         Aquí se mostrarán tus Pokémon favoritos.
     </p>
 
-    <!-- <Counter client:load /> -->
-    <Counter client:only="solid" />
+    <FavoritePokemons client:only="solid-js" />
 
 </Layout>
