@@ -27,7 +27,7 @@ interface Props {
 
 }
 
-/** -----  `obtenemos las propiedades del componente`  -----  */
+/** -----  `obtenemos las propiedades del componente`  ----- */
 const { 
     titlePage = siteInfo.title, 
     description = siteInfo.description, 
@@ -62,8 +62,18 @@ const {
         
         <title> {titlePage} </title>
         <ClientRouter />
+
+
+        <!--  -----  Listeners Globales del ciclo de navegación (View Transitions)  -----  -->
+        <script>
+            
+            import { registerLifeCycleEvents } from '@scripts/life-cicle-events';
+            registerLifeCycleEvents();
+            
+        </script>
         
     </head>
+
 
      <body class="layout">
       

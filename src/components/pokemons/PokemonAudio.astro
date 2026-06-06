@@ -22,6 +22,7 @@ const { src, name } = Astro.props;
 
 
 <div class="mt-10 w-full flex flex-col justify-center items-center">
+    
     <audio
         controls
         preload="none"
@@ -29,5 +30,7 @@ const { src, name } = Astro.props;
     >
         <source src={src} type="audio/ogg" />
         Tu navegador no soporta el elemento de audio.
+        
     </audio>
+
 </div>

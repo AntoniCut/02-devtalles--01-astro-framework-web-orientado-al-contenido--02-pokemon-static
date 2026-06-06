@@ -57,6 +57,7 @@ console.log("currentPath - URL Actual =>", currentPath);
     aria-label="Barra de navegación principal"
 >
 
+    <!--  -----  Botón para menú móvil  -----  -->
     <div class="navbar__mobile-bar">
 
         <button
@@ -80,6 +81,8 @@ console.log("currentPath - URL Actual =>", currentPath);
 
     </div>
     
+
+    <!--  -----  Lista de enlaces de navegación para escritorio  -----  -->
     <ul class="navbar__list navbar__list--desktop"> 
 
         {
@@ -121,7 +124,14 @@ console.log("currentPath - URL Actual =>", currentPath);
 
     </ul>
 
-    <ul id="navbar-mobile-menu" class="navbar__list--mobile" aria-hidden="true" inert>
+
+    <!--  -----  Lista de enlaces de navegación para móvil  -----  -->
+    <ul 
+        id="navbar-mobile-menu" 
+        class="navbar__list--mobile" 
+        aria-hidden="true" 
+        inert
+    >
 
         {
             links.map(({ href, text }) => (
@@ -144,6 +154,7 @@ console.log("currentPath - URL Actual =>", currentPath);
 
 
 
+<!--  -----  Script para manejar el menú de navegación móvil  -----  -->
 <script>
 
     let navbarAbortController: AbortController | undefined;
