@@ -17,14 +17,16 @@
 export const registerLifeCycleEvents = () => {
 
 
-    const logStyle = `color: green; font-size: 10px; padding: 4px; border: 1px solid green; border-radius: 4px; background-color: #f0f0f0;`;
+    const logStyleEvents = `color: blue; font-size: 10px; padding: 4px; border: 1px solid green; border-radius: 4px; background-color: #f0f0f0;`;
+    const logStyleLoadPage = `color: green; font-size: 10px; padding: 4px; border: 1px solid green; border-radius: 4px; background-color: #f0f0f0;`;
+    
 
     document.addEventListener("astro:before-preparation", () => {
 
         console.clear();
         console.log(
             `%c astro:before-preparation — inicio de la fase de preparación (navegación iniciada, contenido aún no cargado).`,
-            logStyle
+            logStyleEvents
         );
 
     });
@@ -34,7 +36,7 @@ export const registerLifeCycleEvents = () => {
         //console.log('\n\n');
         console.log(
             `%c astro:after-preparation — contenido de la nueva página cargado, pendiente del swap.`,
-            logStyle
+            logStyleEvents
         );
 
     });
@@ -44,7 +46,7 @@ export const registerLifeCycleEvents = () => {
         //console.log('\n\n');
         console.log(
             `%c astro:before-swap — a punto de reemplazar el DOM actual por el nuevo.`,
-            logStyle
+            logStyleEvents
         );
 
     });
@@ -54,17 +56,17 @@ export const registerLifeCycleEvents = () => {
         //console.log('\n\n');
         console.log(
             `%c astro:after-swap — DOM reemplazado, justo antes del paint.`,
-            logStyle
+            logStyleEvents
         );
 
     });
 
     document.addEventListener("astro:page-load", () => {
 
-        //console.log('\n\n')
+        console.log('\n\n')
         console.log(
-            `%c astro:page-load — Página cargada: ${window.location.pathname}, ciclo de navegación completo.`,
-            logStyle
+            `%c astro:page-load \n Página cargada: ${window.location.pathname}\n Ciclo de navegación completo.`,
+            logStyleLoadPage
         );
 
     });
